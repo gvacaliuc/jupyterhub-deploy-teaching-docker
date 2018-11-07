@@ -1,0 +1,5 @@
+---
+- name: install some dev tools
+  package:
+    name: net-tools
+    state: latest

@@ -1,0 +1,27 @@
+---
+
+- hosts: datahub-belt
+  vars:
+    - pip_install_packages:
+      - PyYAML
+      - docker-compose
+  vars_files:
+    - vars/config.yml
+  remote_user: gv8
+  roles:
+    - name: geerlingguy.repo-epel
+      tags:
+        - setup
+      become: yes
+    - name: geerlingguy.pip
+      tags:
+        - setup
+      become: yes
+    - name: setup
+      tags:
+        - setup
+      become: yes
+    - name: jupyterhub
+      tags:
+        - hub
+      become: yes

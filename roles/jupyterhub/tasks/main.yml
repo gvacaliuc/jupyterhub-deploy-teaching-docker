@@ -1,0 +1,83 @@
+---
+# roles/jupyterhub/tasks/main.yml
+# 
+# deploys and launches JupyterHub
+
+- name: establish jupyterhub directory
+  file:
+    path: "{{ jh_root_dir }}"
+    state: directory
+    mode: 0755
+
+- name: copy docker compose template
+  template:
+    src: templates/jupyterhub-docker-compose.yml.j2
+    dest: "{{ jh_root_dir }}/docker-compose.yml"
+
+- name: copy Dockerfile.jupyterhub
+  template:
+    src: templates/Dockerfile.jupyterhub.j2
+    dest: "{{ jh_root_dir }}/{{ jh_dockerfile_fname }}"
+
+- name: copy secrets
+  template:
+    src: templates/secrets.env.j2
+    dest: "{{ jh_root_dir }}/secrets.env"
+
+- name: copy hub config
+  template:
+    src: templates/jupyterhub_config.py.j2
+    dest: "{{ jh_root_dir }}/jupyterhub_config.py"
+
+- name: ensure data volume exists
+  docker_volume:
+    name: "{{ DATA_VOLUME_HOST }}"
+    driver: local
+    state: present
+
+- name: ensure db volume exists
+  docker_volume:
+    name: "{{ DB_VOLUME_HOST }}"
+    driver: local
+    state: present
+
+- name: ensure hub network exists
+  docker_network:
+    name: "{{ DOCKER_NETWORK_NAME }}"
+    driver: bridge
+
+- name: establish jupyterhub/singleuser directory
+  file:
+    path: "{{ jh_root_dir }}/singleuser"
+    state: directory
+    mode: 0755
+
+- name: copy Dockerfile.singleuser
+  template:
+    src: templates/Dockerfile.singleuser.j2
+    dest: "{{ jh_root_dir }}/singleuser/Dockerfile.singleuser"
+
+- name: Build singleuser image
+  docker_image:
+    path: "{{ jh_root_dir }}/singleuser"
+    dockerfile: "Dockerfile.singleuser"
+    name: "{{ LOCAL_NOTEBOOK_IMAGE }}"
+    state: present
+    force: yes
+
+#- name: add nginx virtual host configuration
+#  template:
+#    src: templates/nginx_virtual_host.conf.j2
+#    dest: "{{ proxy_dir }}/vhost.d/{{ gitea_domain }}"
+
+# name: add gitea configuration
+# template:
+#   src: templates/app.ini.j2
+#   dest: "{{ gitea_root_dir }}/data/gitea/conf/app.ini"
+
+- name: start jupyterhub
+  docker_service:
+    project_src: "{{ jh_root_dir }}"
+    state: present
+    build: yes
+    restarted: yes

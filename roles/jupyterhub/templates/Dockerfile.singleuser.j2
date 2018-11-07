@@ -1,0 +1,2 @@
+FROM {{ DOCKER_NOTEBOOK_IMAGE }}
+RUN python3 -m pip install --no-cache jupyterhub=={{ JUPYTERHUB_VERSION }}
