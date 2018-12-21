@@ -4,6 +4,7 @@
 
 jh_root_dir: /srv/jupyterhub
 
+# Version of Jupyterhub to use
 JUPYTERHUB_VERSION: 0.9.4
 
 jh_image_version: 0.9.4

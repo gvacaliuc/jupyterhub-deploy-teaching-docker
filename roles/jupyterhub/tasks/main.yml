@@ -1,7 +1,7 @@
 ---
 # roles/jupyterhub/tasks/main.yml
 # 
-# deploys and launches JupyterHub
+# deploys and launches jupyterhub
 
 - name: establish jupyterhub directory
   file:
@@ -68,12 +68,12 @@
 #- name: add nginx virtual host configuration
 #  template:
 #    src: templates/nginx_virtual_host.conf.j2
-#    dest: "{{ proxy_dir }}/vhost.d/{{ gitea_domain }}"
+#    dest: "{{ proxy_dir }}/vhost.d/{{ jh_domain }}"
 
-# name: add gitea configuration
+# name: add jupyterhub configuration
 # template:
 #   src: templates/app.ini.j2
-#   dest: "{{ gitea_root_dir }}/data/gitea/conf/app.ini"
+#   dest: "{{ jh_root_dir }}/data/jupyterhub/conf/app.ini"
 
 - name: start jupyterhub
   docker_service:
