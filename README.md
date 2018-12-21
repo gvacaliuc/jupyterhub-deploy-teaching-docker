@@ -3,12 +3,18 @@
 Ansible scripts to deploy our jupyterhub installation to ORION, Rice's
 OpenNebula installation.  
 
-Sets up:  
+## requirements
+
+* ansible installation
+* passwordless ssh access to vms in your inventory
+
+## provides
+
 [] Postgres Database for each whitelisted user
     [] copies contents of a template database
     [] initial plaintext password / user file
 [x] JupyterHub running in a container
-[] User Data persisted in Docker Volume
+[x] User Data persisted in Docker Volume
     [] volume backups to cloud storage
 [] Authenticator
     [x] GitHub OAuth

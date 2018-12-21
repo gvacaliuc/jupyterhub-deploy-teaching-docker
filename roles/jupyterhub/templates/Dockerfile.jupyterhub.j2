@@ -1,8 +1,12 @@
-FROM jupyterhub/jupyterhub-onbuild:{{ jh_image_version }}
+# vi: ft=Dockerfile
+FROM jupyterhub/jupyterhub:{{ JUPYTERHUB_VERSION }}
 
-# Install dockerspawner, oauth, postgres
 RUN /opt/conda/bin/conda install -yq psycopg2=2.7 && \
-    /opt/conda/bin/conda clean -tipsy && \
-    /opt/conda/bin/pip install --no-cache-dir \
-        oauthenticator==0.8.* \
-        dockerspawner==0.9.*
+    /opt/conda/bin/conda clean -tipsy
+
+RUN /opt/conda/bin/pip install --no-cache \
+    oauthenticator==0.8.* \
+    dockerspawner==0.9.* \
+    git+https://github.com/ryanlovett/imagespawner.git@035b5e031dd8dd5277476f01499008b678109463
+    
+COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py

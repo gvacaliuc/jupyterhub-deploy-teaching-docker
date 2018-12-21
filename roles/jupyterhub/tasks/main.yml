@@ -46,24 +46,12 @@
     name: "{{ DOCKER_NETWORK_NAME }}"
     driver: bridge
 
-- name: establish jupyterhub/singleuser directory
-  file:
-    path: "{{ jh_root_dir }}/singleuser"
-    state: directory
-    mode: 0755
-
-- name: copy Dockerfile.singleuser
-  template:
-    src: templates/Dockerfile.singleuser.j2
-    dest: "{{ jh_root_dir }}/singleuser/Dockerfile.singleuser"
-
-- name: Build singleuser image
+# Pull all valid single user images.
+- name: pull singleuser images
   docker_image:
-    path: "{{ jh_root_dir }}/singleuser"
-    dockerfile: "Dockerfile.singleuser"
-    name: "{{ LOCAL_NOTEBOOK_IMAGE }}"
+    name: "{{ item }}"
     state: present
-    force: yes
+  with_items: jh_singleuser_images
 
 #- name: add nginx virtual host configuration
 #  template:
