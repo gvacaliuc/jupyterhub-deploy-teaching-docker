@@ -1,3 +1,5 @@
 secrets/
 userlist
 .DS_Store
+*.retry
+*.backuplines
