@@ -84,3 +84,14 @@ ipython_config_dir: /etc/ipython
 
 nbgrader_log_dir: /var/log/nbgrader
 nbgrader_exchange_dir: /srv/nbgrader/exchange
+
+# ---------------------------------------------------
+# Domain / Networking / SSL
+# ---------------------------------------------------
+
+jh_port_host: 443
+jh_port_container: 443
+jh_public_domain: hub.example.com
+jh_country_code: US
+jh_csr_org_name: Example Organization
+jh_csr_email: jane.doe@example.com

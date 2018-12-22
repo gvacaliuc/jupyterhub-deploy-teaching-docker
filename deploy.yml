@@ -5,6 +5,7 @@
     - pip_install_packages:
       - PyYAML
       - docker-compose
+      - pyOpenSSL
   vars_files:
     - vars/config.yml
   remote_user: gv8

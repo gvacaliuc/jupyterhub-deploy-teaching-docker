@@ -1,0 +1,32 @@
+---
+# roles/jupyterhub/tasks/ssl.yml
+# 
+# generates ssl configuration for jupyterhub
+
+- name: establish jupyterhub ssl directory
+  file:
+    path: "{{ jh_root_dir }}/ssl"
+    state: directory
+    mode: 0755
+
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path: "{{ jh_root_dir }}/ssl/{{ jh_public_domain }}.pem"
+  register: ssl_privatekey
+
+- name: Generate an OpenSSL Certificate Signing Request
+  openssl_csr:
+    path: "{{ jh_root_dir }}/ssl/{{ jh_public_domain }}.csr"
+    privatekey_path: "{{ ssl_privatekey.filename }}"
+    country_name: "{{ jh_country_code }}"
+    organization_name: "{{ jh_csr_org_name }}"
+    email_address: "{{ jh_csr_email }}"
+    common_name: "{{ jh_public_domain }}"
+  register: ssl_csr
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: "{{ jh_root_dir }}/ssl/{{ jh_public_domain }}.crt"
+    privatekey_path: "{{ ssl_privatekey.filename }}"
+    csr_path: "{{ ssl_csr.filename }}"
+    provider: selfsigned

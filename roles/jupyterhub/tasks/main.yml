@@ -9,37 +9,21 @@
     state: directory
     mode: 0755
 
-- name: copy docker compose template
-  template:
-    src: templates/jupyterhub-docker-compose.yml.j2
-    dest: "{{ jh_root_dir }}/docker-compose.yml"
+- name: copy jupyterhub service directory from templates
+  template: 
+    src: "{{ item }}" 
+    dest: "{{ jh_root_dir }}/{{ item | basename | regex_replace('\\.j2','') }}"
+  with_fileglob:
+    - templates/*.j2
 
-- name: copy Dockerfile.jupyterhub
-  template:
-    src: templates/Dockerfile.jupyterhub.j2
-    dest: "{{ jh_root_dir }}/{{ jh_dockerfile_fname }}"
-
-- name: copy secrets
-  template:
-    src: templates/secrets.env.j2
-    dest: "{{ jh_root_dir }}/secrets.env"
-
-- name: copy hub config
-  template:
-    src: templates/jupyterhub_config.py.j2
-    dest: "{{ jh_root_dir }}/jupyterhub_config.py"
-
-- name: ensure data volume exists
+- name: ensure db and data volumes exists
   docker_volume:
-    name: "{{ DATA_VOLUME_HOST }}"
+    name: "{{ item }}"
     driver: local
     state: present
-
-- name: ensure db volume exists
-  docker_volume:
-    name: "{{ DB_VOLUME_HOST }}"
-    driver: local
-    state: present
+  with_items:
+    - "{{ DB_VOLUME_HOST }}"
+    - "{{ DATA_VOLUME_HOST }}"
 
 - name: ensure hub network exists
   docker_network:
@@ -51,7 +35,7 @@
   docker_image:
     name: "{{ item }}"
     state: present
-  with_items: jh_singleuser_images
+  with_items: "{{ jh_singleuser_images }}"
 
 #- name: add nginx virtual host configuration
 #  template:
@@ -62,6 +46,11 @@
 # template:
 #   src: templates/app.ini.j2
 #   dest: "{{ jh_root_dir }}/data/jupyterhub/conf/app.ini"
+
+- name: Include SSL Plays
+  include: ssl.yml
+  tags:
+    - ssl
 
 - name: start jupyterhub
   docker_service:
