@@ -1,17 +1,32 @@
-# Welcome to MkDocs
+# Overview [![Build Status](https://cloud.drone.io/api/badges/rice-comp543/jupyterhub-deploy-teaching-docker/status.svg)](https://cloud.drone.io/rice-comp543/jupyterhub-deploy-teaching-docker)
 
-For full documentation visit [mkdocs.org](https://mkdocs.org).
+The goal of this repository is to produce a reference deployment of JupyterHub
+for teaching with nbgrader leveraging Docker for serving the hub and user
+containers.
 
-## Commands
+---
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+The main use case targeted is **small to medium groups of trusted users
+working on a single server** who want environments managed by Docker.
 
-## Project layout
+This repository was inspired by the following reference deployments from
+Jupyter:  
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+* [JupyterHub Deploy Teaching](https://github.com/jupyterhub/jupyterhub-deploy-teaching)
+* [JupyterHub Deploy Docker](https://github.com/jupyterhub/jupyterhub-deploy-docker)
+
+## Quick Start
+
+Sets up a test CentOS container to deploy:  
+
+* [x] DummyAuthenticator
+* [x] Docker Spawner w/ Form
+* [x] SSL Termination
+
+```bash
+git clone https://github.com/rice-comp543/jupyterhub-deploy-teaching-docker.git
+docker-compose up -d 
+make deploy HOSTS=inventory/test-hosts.ini
+```
+
+then open https://localhost:8000 in your browser.  
