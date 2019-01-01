@@ -1,12 +1,21 @@
 ---
 kind: pipeline
 name: default
+
+services:
+  - name: centos
+    image: centos:7
+    privileged: true
+    volumes:
+      - /root/.docker:/root/.docker
+      - /var/run/docker.sock:/var/run/docker.sock
+
 steps:
   - name: build
     image: squidfunk/mkdocs-material
     commands:
       - mkdocs build 
-  - name: publish
+  - name: publish docs
     image: gvacaliuc/drone-gh-pages
     settings:
       pages_directory: site
@@ -17,10 +26,16 @@ steps:
       username: gvacaliuc
       password:
         from_secret: gh_password
-  - name: ansible-check
+  - name: ansible syntax check
     image: plugins/ansible
     settings:
       playbook: deploy.yml
       galaxy: requirements.yml
       inventory: hosts.example
       syntax_check: true
+  - name: ansible deploy test
+    image: plugins/ansible
+    settings:
+      playbook: deploy.yml
+      galaxy: requirements.yml
+      inventory: inventory/test-hosts.ini
