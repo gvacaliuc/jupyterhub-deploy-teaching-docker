@@ -1,7 +1,6 @@
 ---
 kind: pipeline
 name: default
-
 steps:
   - name: build
     image: squidfunk/mkdocs-material
@@ -18,3 +17,10 @@ steps:
       username: gvacaliuc
       password:
         from_secret: gh_password
+  - name: ansible-check
+    image: plugins/ansible
+    settings:
+      playbook: deploy.yml
+      galaxy: requirements.yml
+      inventory: orion-hosts
+      syntax_check: true

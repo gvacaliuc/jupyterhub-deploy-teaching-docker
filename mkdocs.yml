@@ -1,4 +1,4 @@
-site_name: Jupyterhub Deploy Teaching Docker
+site_name: JupyterHub for Teaching with Docker
 theme:
   name: 'material'
   palette:
@@ -40,7 +40,7 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
 nav:
-  - Jupyterhub for Teaching Docker: index.md
+  - Overview: index.md
   - Design: design.md
   - Configuring jupyterub: hub-configuration.md
   - Configuring nbgrader: nbgrader-configuration.md
