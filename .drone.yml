@@ -12,6 +12,7 @@ steps:
     settings:
       pages_directory: site
       upstream_name: https://github.com/rice-comp543/jupyterhub-deploy-teaching-docker.git
+      source_branch: master
       target_branch: gh-pages
       force_push: true
       username: gvacaliuc
