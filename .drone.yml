@@ -1,0 +1,19 @@
+---
+kind: pipeline
+name: default
+
+steps:
+  - name: build
+    image: squidfunk/mkdocs-material
+    commands:
+      - build 
+  - name: publish
+    image: gvacaliuc/drone-gh-pages
+    settings:
+      pages_directory: public
+      upstream_name: https://github.com/rice-comp543/jupyterhub-deploy-teaching-docker.git
+      target_branch: gh-pages
+      force_push: true
+      username: gvacaliuc
+      password:
+        from_secret: gh_password

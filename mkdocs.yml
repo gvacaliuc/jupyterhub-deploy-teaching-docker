@@ -1,0 +1,47 @@
+site_name: Jupyterhub Deploy Teaching Docker
+theme:
+  name: 'material'
+  palette:
+    primary: 'indigo'
+    accent: 'indigo'
+  logo:
+    icon: 'school'
+  language: 'en'
+repo_name: 'rice-comp543/jupyterhub-deploy-teaching-docker'
+repo_url: 'https://github.com/rice-comp543/jupyterhub-deploy-teaching-docker'
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/rice-comp543'
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+nav:
+  - Jupyterhub for Teaching Docker: index.md
+  - Design: design.md
+  - Configuring jupyterub: hub-configuration.md
+  - Configuring nbgrader: nbgrader-configuration.md
+  - Acknowledgement: acknowledgement.md
