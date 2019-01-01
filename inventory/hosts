@@ -1,0 +1,2 @@
+[jupyterhub_hosts]
+orion-196-7.crc.rice.edu ansible_host=10.134.196.7
