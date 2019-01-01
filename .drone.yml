@@ -22,5 +22,5 @@ steps:
     settings:
       playbook: deploy.yml
       galaxy: requirements.yml
-      inventory: orion-hosts
+      inventory: hosts.example
       syntax_check: true
