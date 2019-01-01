@@ -6,11 +6,11 @@ steps:
   - name: build
     image: squidfunk/mkdocs-material
     commands:
-      - build 
+      - mkdocs build 
   - name: publish
     image: gvacaliuc/drone-gh-pages
     settings:
-      pages_directory: public
+      pages_directory: site
       upstream_name: https://github.com/rice-comp543/jupyterhub-deploy-teaching-docker.git
       target_branch: gh-pages
       force_push: true
