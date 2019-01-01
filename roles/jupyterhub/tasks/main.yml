@@ -22,30 +22,19 @@
     driver: local
     state: present
   with_items:
-    - "{{ DB_VOLUME_HOST }}"
-    - "{{ DATA_VOLUME_HOST }}"
+    - "{{ jh_db_volume_host }}"
+    - "{{ jh_data_volume_host }}"
 
 - name: ensure hub network exists
   docker_network:
-    name: "{{ DOCKER_NETWORK_NAME }}"
+    name: "{{ jh_docker_network }}"
     driver: bridge
 
-# Pull all valid single user images.
 - name: pull singleuser images
   docker_image:
     name: "{{ item }}"
     state: present
   with_items: "{{ jh_singleuser_images }}"
-
-#- name: add nginx virtual host configuration
-#  template:
-#    src: templates/nginx_virtual_host.conf.j2
-#    dest: "{{ proxy_dir }}/vhost.d/{{ jh_domain }}"
-
-# name: add jupyterhub configuration
-# template:
-#   src: templates/app.ini.j2
-#   dest: "{{ jh_root_dir }}/data/jupyterhub/conf/app.ini"
 
 - name: Include SSL Plays
   include: ssl.yml

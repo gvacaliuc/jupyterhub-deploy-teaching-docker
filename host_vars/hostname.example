@@ -1,0 +1,36 @@
+---
+
+# JupyterHub Authentication
+
+jh_authenticator:
+  oauth:
+    callback_url: "https://{{ inventory_hostname }}/hub/oauth_callback"
+    client_id: fc65e4e76add2647cfe4
+    client_secret: 5c357d6bb33f1c69b6165261d5a9816a0fc59397
+
+jh_singleuser_images:
+  - jupyter/scipy-notebook
+  - jupyter/pyspark-notebook
+  - jupyter/tensorflow-notebook
+
+jupyterhub_admin_users:
+  - bob
+  - sue
+
+jupyterhub_users:
+  - bob
+  - sue
+
+# ------------------------------------
+# Hosting Details
+# ------------------------------------
+
+# FQDN for JupyterHub
+jh_public_domain: "{{ inventory_hostname }}"
+jh_country_code: US
+
+# Organization Name for the self-signed SSL Certificate
+jh_csr_org_name: Example Organization
+
+# Email for the self-signed SSL Certificate
+jh_csr_email: jane.doe@example.com

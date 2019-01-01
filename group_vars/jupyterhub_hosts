@@ -1,0 +1,76 @@
+---
+# file: group_vars/jupyterhub_hosts
+# type: variable file for all jupyterhub hosts
+
+# These are global variables that are used across roles.
+# NOTE: You shouldn't have to change these, to customize this deployment
+#       for individual hosts, create and edit files in the host_vars folder.
+
+# ---------------------------------------------------
+# Ansible
+# ---------------------------------------------------
+
+# Path of the Python 3 interpreter on the remote server
+# ansible_python_interpreter: '/usr/bin/python3'
+
+# ---------------------------------------------------
+# JupyterHub Host Configuration
+# ---------------------------------------------------
+
+jh_root_dir: /srv/jupyterhub
+
+# Name of JupyterHub container data volume
+jh_data_volume_host: jupyterhub-data
+
+# Port to serve JupyterHub from on the host
+jh_port_host: 443
+
+# ---------------------------------------------------
+# JupyterHub Container Configuration
+# ---------------------------------------------------
+
+# Version of Jupyterhub to use
+jh_version: 0.9.4
+
+# Data volume container mount point
+jh_data_volume_container: /data
+
+# Name of Docker network
+jh_docker_network: jupyterhub-network
+
+# Port to serve JupyterHub from in the container
+jh_port_container: 443
+
+# Notebook directory in the container.
+# This will be /home/jovyan/work if the default
+# This directory is stored as a docker volume for each user
+jupyter_notebook_dir: /home/jovyan/work
+
+# Docker run command to use when spawning single-user containers
+jupyter_spawn_cmd: start-singleuser.sh
+
+
+# ---------------------------------------------------
+# JupyterHub Database Container Configuration
+# ---------------------------------------------------
+
+# Name of JupyterHub postgres database data volume.
+jh_db_volume_host: jupyterhub-db-data
+
+# The name of the postgres database containing JupyterHub state.
+jh_postgres_db: jupyterhub
+
+# -----------------------------------------------------------------------------
+# Singleuser Images
+# -----------------------------------------------------------------------------
+
+# A list of docker images available to users.
+jh_singleuser_images:
+  - jupyter/minimal-notebook
+
+# ---------------------------------------------------
+# Nbgrader config directories
+# ---------------------------------------------------
+
+nbgrader_log_dir: /var/log/nbgrader
+nbgrader_exchange_dir: /srv/nbgrader/exchange

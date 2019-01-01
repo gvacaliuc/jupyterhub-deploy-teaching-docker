@@ -2,25 +2,24 @@ version: "2"
 
 services:
   hub-db:
-    image: {{ POSTGRES_DB_IMAGE }}
+    image: postgres:alpine
     container_name: jupyterhub-db
     restart: always
     environment:
-      POSTGRES_DB: {{ POSTGRES_DB }}
-      PGDATA: {{ DB_VOLUME_CONTAINER }}
+      POSTGRES_DB: {{ jh_postgres_db }}
     env_file:
       - secrets.env
     volumes:
-      - "db:{{ DB_VOLUME_CONTAINER }}"
+      - "db:/var/lib/postgresql/data"
 
   hub:
     depends_on:
       - hub-db
     build:
       context: .
-      dockerfile: {{ jh_dockerfile_fname }}
+      dockerfile: Dockerfile.jupyterhub
       args:
-        JUPYTERHUB_VERSION: {{ JUPYTERHUB_VERSION }}
+        JUPYTERHUB_VERSION: {{ jh_version }}
     restart: always
     image: jupyterhub
     container_name: jupyterhub
@@ -29,22 +28,20 @@ services:
       # within the container
       - "/var/run/docker.sock:/var/run/docker.sock:rw"
       # Bind Docker volume on host for JupyterHub database and cookie secrets
-      - "data:{{ DATA_VOLUME_CONTAINER }}"
+      - "data:{{ jh_data_volume_container }}"
     ports:
       - "{{ jh_port_host }}:{{ jh_port_container }}"
     links:
       - hub-db
     environment:
       # All containers will join this network
-      DOCKER_NETWORK_NAME: {{ DOCKER_NETWORK_NAME }}
-      # JupyterHub will spawn this Notebook image for users
-      DOCKER_NOTEBOOK_IMAGE: {{ LOCAL_NOTEBOOK_IMAGE }}
+      DOCKER_NETWORK_NAME: {{ jh_docker_network }}
       # Notebook directory inside user image
-      DOCKER_NOTEBOOK_DIR: {{ DOCKER_NOTEBOOK_DIR }}
+      DOCKER_NOTEBOOK_DIR: {{ jupyter_notebook_dir }}
       # Using this run command (optional)
-      DOCKER_SPAWN_CMD: {{ DOCKER_SPAWN_CMD }}
+      DOCKER_SPAWN_CMD: {{ jupyter_spawn_cmd }}
       # Postgres db info
-      POSTGRES_DB: {{ POSTGRES_DB }}
+      POSTGRES_DB: {{ jh_postgres_db }}
       POSTGRES_HOST: hub-db
     env_file:
       - secrets.env
@@ -54,12 +51,12 @@ services:
 volumes:
   data:
     external:
-      name: {{ DATA_VOLUME_HOST }}
+      name: {{ jh_data_volume_host }}
   db:
     external:
-      name: {{ DB_VOLUME_HOST }}
+      name: {{ jh_db_volume_host }}
 
 networks:
   default:
     external:
-      name: {{ DOCKER_NETWORK_NAME }}
+      name: {{ jh_docker_network }}

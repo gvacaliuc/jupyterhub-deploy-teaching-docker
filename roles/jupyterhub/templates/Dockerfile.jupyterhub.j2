@@ -1,5 +1,6 @@
 # vi: ft=Dockerfile
-FROM jupyterhub/jupyterhub:{{ JUPYTERHUB_VERSION }}
+ARG JUPYTERHUB_VERSION=0.9.4
+FROM jupyterhub/jupyterhub:${JUPYTERHUB_VERSION}
 
 RUN /opt/conda/bin/conda install -yq psycopg2=2.7 && \
     /opt/conda/bin/conda clean -tipsy

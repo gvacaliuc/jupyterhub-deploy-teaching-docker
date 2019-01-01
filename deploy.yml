@@ -1,28 +1,18 @@
 ---
 
-- hosts: datahub-belt
+- hosts: jupyterhub_hosts
+  tasks:
+    - name: make sure we're running centos
+      fail: msg="These ansible scripts only work on CentOS or RHEL."
+      when: ansible_distribution != "CentOS" and ansible_distribution != "Red Hat Enterprise Linux"
   vars:
     - pip_install_packages:
       - PyYAML
       - docker-compose
       - pyOpenSSL
-  vars_files:
-    - vars/config.yml
   remote_user: gv8
   roles:
-    - name: geerlingguy.repo-epel
-      tags:
-        - setup
-      become: yes
-    - name: geerlingguy.pip
-      tags:
-        - setup
-      become: yes
-    - name: setup
-      tags:
-        - setup
-      become: yes
-    - name: jupyterhub
-      tags:
-        - hub
-      become: yes
+    - { role: geerlingguy.repo-epel, tags: setup }
+    - { role: geerlingguy.pip, tags: setup }
+    - { role: geerlingguy.docker, tags: setup }
+    - { role: jupyterhub, tags: hub }
