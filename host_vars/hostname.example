@@ -1,29 +1,33 @@
 ---
 
+# ---------------------------------------------------
 # JupyterHub Authentication
+# ---------------------------------------------------
 
+# Uses the Generic OAuthenticator
 jh_authenticator:
   oauth:
-    callback_url: "https://{{ inventory_hostname }}/hub/oauth_callback"
-    client_id: fc65e4e76add2647cfe4
-    client_secret: 5c357d6bb33f1c69b6165261d5a9816a0fc59397
+    callback_url: "https://{{ inventory_hostname }}:{{ jh_port_host }}/hub/oauth_callback"
+    client_id: dd264e4e76a7cfe4fc65
+    client_secret: 6bb33c59397f1c69b6165261d5a9816a0f5c357d
 
+# Specifies which singleuser images we should pull and allow on the hub
 jh_singleuser_images:
   - jupyter/scipy-notebook
-  - jupyter/pyspark-notebook
-  - jupyter/tensorflow-notebook
 
+# A list of users who should be made admin
 jupyterhub_admin_users:
   - bob
   - sue
 
+# A list of users who should be allowed to use the hub
 jupyterhub_users:
   - bob
   - sue
 
-# ------------------------------------
-# Hosting Details
-# ------------------------------------
+# ---------------------------------------------------
+# Domain / SSL Details
+# ---------------------------------------------------
 
 # FQDN for JupyterHub
 jh_public_domain: "{{ inventory_hostname }}"

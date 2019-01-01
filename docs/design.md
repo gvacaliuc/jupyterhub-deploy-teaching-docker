@@ -30,7 +30,7 @@ For *managing users and services* on the server, you will:
 - Create "Trusted" users on the system, meaning that you would give them a
   user-level shell account on the server
 - Authenticate and manage users with either:
-  * GitHub OAuth
-  * Google OAuth
-  * CAS
-- Manage the running of jupyterhub and nbgrader using docker.
+    - GitHub OAuth
+    - Google OAuth
+    - CAS
+- Manage the running of jupyterhub and nbgrader using docker
