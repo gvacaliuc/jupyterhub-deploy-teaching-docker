@@ -2,14 +2,6 @@
 kind: pipeline
 name: default
 
-services:
-  - name: centos
-    image: centos:7
-    privileged: true
-    volumes:
-      - /root/.docker:/root/.docker
-      - /var/run/docker.sock:/var/run/docker.sock
-
 steps:
   - name: build
     image: squidfunk/mkdocs-material
@@ -33,9 +25,3 @@ steps:
       galaxy: requirements.yml
       inventory: hosts.example
       syntax_check: true
-  - name: ansible deploy test
-    image: plugins/ansible
-    settings:
-      playbook: deploy.yml
-      galaxy: requirements.yml
-      inventory: inventory/test-hosts.ini
