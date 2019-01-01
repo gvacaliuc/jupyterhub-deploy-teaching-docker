@@ -12,4 +12,4 @@
 # ignored. Saving the file as `hosts` after editing is important.
 
 [jupyterhub_hosts]
-fqdn.goes.here
+hostname.example

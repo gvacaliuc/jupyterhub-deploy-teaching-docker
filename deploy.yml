@@ -10,7 +10,6 @@
       - PyYAML
       - docker-compose
       - pyOpenSSL
-  remote_user: gv8
   roles:
     - { role: geerlingguy.repo-epel, tags: setup }
     - { role: geerlingguy.pip, tags: setup }
