@@ -3,6 +3,8 @@ ANSIBLE_USER = gv8
 TAGS = setup hub
 PLAYBOOK = deploy.yml
 
+all:
+
 deploy:
 	ansible-playbook -i ${HOSTS} -u ${ANSIBLE_USER} -b ${PLAYBOOK} $(addprefix -t , $(TAGS))
 
@@ -13,4 +15,4 @@ clean:
 	rm *.retry 2>/dev/null || true
 	rm -rf site 2>/dev/null || true
 
-.PHONY: deploy docs-serve clean
+.PHONY: deploy docs-serve clean all
