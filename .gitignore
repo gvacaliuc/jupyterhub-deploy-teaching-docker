@@ -5,3 +5,4 @@ userlist
 *.backuplines
 site
 host_vars/*.edu
+roles/ext

@@ -17,6 +17,14 @@ Jupyter:
 
 ## Quick Start
 
+### install ansible galaxy requirements
+
+```
+ansible-galaxy install -r requirements.yml
+```
+
+### run and deploy to test machine
+
 Sets up a test CentOS container to deploy:  
 
 * [x] DummyAuthenticator
