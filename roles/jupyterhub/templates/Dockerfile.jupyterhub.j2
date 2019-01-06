@@ -7,6 +7,7 @@ RUN /opt/conda/bin/conda install -yq psycopg2=2.7 && \
 
 RUN /opt/conda/bin/pip install --no-cache \
     oauthenticator==0.8.* \
+    jhub-cas-authenticator==0.3.0 \
     git+https://github.com/jupyterhub/dockerspawner.git@10d3a373370de4d1edfb6e9a092524d2ff768f31
     
 COPY jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
