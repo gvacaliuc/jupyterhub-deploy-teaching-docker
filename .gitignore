@@ -4,3 +4,4 @@ userlist
 *.retry
 *.backuplines
 site
+host_vars/*.edu
