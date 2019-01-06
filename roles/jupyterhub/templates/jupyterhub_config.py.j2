@@ -78,7 +78,7 @@ c.JupyterHub.ssl_cert = "/srv/jupyterhub/ssl/{{ jh_public_domain }}.crt"
 
 # AUTHENTICATOR ---------------------------------------------------------------
 
-{% if jhub_authenticator.oauth %}
+{% if 'oauth' in jh_authenticator %}
 # Authenticate users with OAuth
 c.JupyterHub.authenticator_class = "oauthenticator.GenericOAuthenticator"
 c.GenericOAuthenticator.oauth_callback_url = os.environ["OAUTH_CALLBACK_URL"]
@@ -86,7 +86,7 @@ c.GenericOAuthenticator.client_id = os.environ["OAUTH_CLIENT_ID"]
 c.GenericOAuthenticator.client_secret = os.environ["OAUTH_CLIENT_SECRET"]
 
 # Authenticate users with CAS Authentication
-{% elif jhub_authenticator.cas %}
+{% elif 'cas' in jh_authenticator %}
 c.JupyterHub.authenticator_class = "jhub_cas_authenticator.cas_auth.CASAuthenticator"
 
 # The CAS URL to redirect unauthenticated users to.
