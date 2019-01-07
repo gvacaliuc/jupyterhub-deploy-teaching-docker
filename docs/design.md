@@ -4,13 +4,15 @@ Create a JupyterHub teaching reference deployment that is simple yet
 functional:
 
 * [x] Use a single server.
-* [x] use the default jupyterhub proxy
-* [ ] Use Nginx as a frontend proxy, serving static assets, and a termination
+* [ ] proxy options
+    * [x] use default jupyterhub proxy
+    * [ ] Use Nginx as a frontend proxy, serving static assets, and a termination
   point for SSL/TLS.
-* [x] Configure using Ansible scripts.
-* [x] generate self signed SSL certificates for the hub
-* [ ] Use (optionally) https://letsencrypt.org/ for generating SSL certificates.
-* [x] Uses Docker to serve the hub and user servers
+* [x] deploy using ansible scripts
+* [ ] provide ssl encryption
+    * [x] generate self signed SSL certificates for the hub
+    * [ ] Use (optionally) https://letsencrypt.org/ for generating SSL certificates.
+* [x] uses docker to serve the hub and user servers
 
 ## Prerequisites
 
@@ -27,10 +29,8 @@ For *administration* of the server, you should also:
 
 For *managing users and services* on the server, you will:
 
-- Create "Trusted" users on the system, meaning that you would give them a
-  user-level shell account on the server
 - Authenticate and manage users with either:
-    - GitHub OAuth
-    - Google OAuth
+    - OAuth2
     - CAS
-- Manage the running of jupyterhub and nbgrader using docker
+- Spawn users in a container on the server
+- Run jupyterhub and nbgrader using docker
