@@ -15,6 +15,8 @@
     dest: "{{ jh_root_dir }}/{{ item | basename | regex_replace('\\.j2','') }}"
   with_fileglob:
     - templates/*.j2
+  tags:
+    - hub_config
 
 - name: ensure db and data volumes exists
   docker_volume:
@@ -47,3 +49,5 @@
     state: present
     build: yes
     restarted: yes
+  tags:
+    - hub_config

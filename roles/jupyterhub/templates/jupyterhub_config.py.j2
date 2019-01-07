@@ -141,3 +141,15 @@ c.Authenticator.whitelist = {
 {% else %}
 c.Authenticator.whitelist = set()
 {% endif %}
+
+# HUB SERVICES
+
+import sys
+
+c.JupyterHub.services = [
+    {
+        'name': 'cull-idle',
+        'admin': True,
+        'command': [sys.executable, '{{ jh_root_dir }}/cull_idle_servers.py', '--timeout=3600'],
+    }
+]
