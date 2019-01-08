@@ -23,18 +23,23 @@ Jupyter:
 ansible-galaxy install -r requirements.yml
 ```
 
-### run and deploy to test machine
+### add an inventory for your CentOS machine
 
-Sets up a test CentOS container to deploy:  
+Currently only CentOS is supported.  Provide ansible a domain and IP of the
+server you'd like to deploy to in `inventory/hosts`:
 
-* [x] DummyAuthenticator
-* [x] Docker Spawner w/ Form
-* [x] SSL Termination
-
-```bash
-git clone https://github.com/rice-comp543/jupyterhub-deploy-teaching-docker.git
-docker-compose up -d 
-make deploy HOSTS=inventory/test-hosts.ini
+```ini
+[jupyterhub_hosts]
+www.example.com ansible_host=0.0.0.0
 ```
 
-then open https://localhost:8000 in your browser.  
+### add a host variable file
+
+Configure your host in `host_vars/www.example.com`.  For more details see [Hub
+Configuration](./hub-configuration).
+
+### run and deploy to test machine
+
+```bash
+make deploy
+```
