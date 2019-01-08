@@ -24,8 +24,9 @@ JupyterHub to.
 
 ## Variables
 
-Group configuration can be found in `group_vars/jupyterhub_hosts`.  You
-shouldn't need to modify these!  Focus on the variables below:
+Configure your host in `host_vars/www.example.com`.  Group configuration can be
+found in `group_vars/jupyterhub_hosts`.  You shouldn't need to modify the group
+variables!  You should be able to simply modify the variables below:
 
 ```yaml
 ---
