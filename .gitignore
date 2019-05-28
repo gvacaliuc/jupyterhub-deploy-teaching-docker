@@ -6,3 +6,7 @@ userlist
 site
 host_vars/*.edu
 roles/ext
+*.swp
+inventory/devel
+inventory/test
+inventory/production
